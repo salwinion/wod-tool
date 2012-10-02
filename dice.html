@@ -16,15 +16,19 @@ function rollTest(numberOfDice, difficulty, ruleOfTen) {
 		hits: 0,
 		ones: 0,
 	};
-	for(i = numberOfDice; i > 0; ) {
+	for(i = 0; i < numberOfDice; ++i) {
 		result.resultOfDice.push(roll = rollDice(10));
-		if (roll >= difficulty) {
-			++result.hits;
-		} else if (roll == 1) {
+		if (roll == 1) {
 			++result.ones;
 		}
-		if (!ruleOfTen || roll != 10) {
-			--i;
+		if (roll >= difficulty) {
+			++result.hits;
+		}
+		while (ruleOfTen && roll == 10) {
+			result.resultOfDice.push(roll = rollDice(10));
+			if (roll >= difficulty) {
+				++result.hits;
+			}
 		}
 	}
 	return result;
