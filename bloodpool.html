@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Blood Pool - WoD</title>
+
+<script type="text/javascript">
+<!--
+function getCharacterPrefix(character) {
+	return "wod-tool.character." + character;
+}
+
+function getBloodPool(character) {
+	return getLocalInteger(getCharacterPrefix(character) + ".bloodPool");
+}
+
+function getGeneration(character) {
+	return getLocalInteger(getCharacterPrefix(character) + ".generation");
+}
+
+function setBloodPool(character, value) {
+	localStorage[getCharacterPrefix(character) + ".bloodPool"] = value;
+}
+
+function setGeneration(character, value) {
+	localStorage[getCharacterPrefix(character) + ".generation"] = value;
+}
+
+function getLocalInteger(key) {
+	var storedValue = localStorage[key];
+	if (storedValue == null) {
+		return null;
+	}
+	var value = parseInt(storedValue);
+	if (!isInteger(value)) {
+		return null;
+	}
+	return value;
+}
+
+function getMaxBloodPoolForGeneration(generation) {
+	if (generation >= 13) {
+		return 10;
+	}
+	switch (generation) {
+	case 4: return 50;
+	case 5: return 40;
+	case 6: return 30;
+	case 7: return 20;
+	case 8: return 15;
+	case 9: return 14;
+	case 10: return 13;
+	case 11: return 12;
+	case 12: return 11;
+	default:
+		throw "Invalid generation " + generation;
+	}
+}
+
+
+function isInteger(value){
+        if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
+                return true;
+        } else {
+                return false;
+        }
+}
+
+
+function onLoad() {
+	var bloodpool = getBloodPool("example");
+	if (!bloodpool) {
+		bloodpool = 10;
+	}
+	document.getElementById('bloodpool').innerHTML = bloodpool;
+
+	var generation = getGeneration("example");
+	if (!generation) {
+		generation = 13;
+	}
+	document.forms[0].generation.value = generation;
+
+	document.getElementById('bloodpoolmax').innerHTML = getMaxBloodPoolForGeneration(generation);
+}
+
+function onGenerationChanged() {
+	var generation = parseInt(document.forms[0].generation.value);
+	if (!(generation >= 4)) {
+		generation = 4;
+		document.forms[0].generation.value = generation;
+	}
+	document.getElementById('bloodpoolmax').innerHTML = getMaxBloodPoolForGeneration(generation);
+	setGeneration("example", generation);
+}
+
+function addBlood(value) {
+	var bloodpool = parseInt(document.getElementById('bloodpool').innerHTML);
+	if (!isInteger(bloodpool)) {
+		bloodpool = 10;
+	}
+	bloodpool += value;
+	setBloodPool("example", bloodpool);
+	document.getElementById('bloodpool').innerHTML = bloodpool;
+}
+
+// -->
+</script>
+
+</head>
+
+<body onload="onLoad();">
+
+<form>
+generation: <input id="generation" type="text" onblur="onGenerationChanged()"><br>
+blood pool<br>
+<span id="bloodpool"></span> / <span id="bloodpoolmax">0</span><br>
+<input type=button value="+1" onclick="addBlood(+1)">
+<input type=button value="+2" onclick="addBlood(+2)">
+<input type=button value="+3" onclick="addBlood(+3)">
+<input type=button value="+4" onclick="addBlood(+4)">
+<input type=button value="+5" onclick="addBlood(+5)"><br>
+<input type=button value="-1" onclick="addBlood(-1)">
+<input type=button value="-2" onclick="addBlood(-2)">
+<input type=button value="-3" onclick="addBlood(-3)">
+<input type=button value="-4" onclick="addBlood(-4)">
+<input type=button value="-5" onclick="addBlood(-5)"><br>
+</form>
+
+</body>
+</html>
