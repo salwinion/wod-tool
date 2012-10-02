@@ -30,7 +30,7 @@ function rollTest(numberOfDice, difficulty) {
 	if (hits > ones) {
 		result += "+" + (hits - ones);
 	} else if (hits == 0 && ones > 0) {
-		result += "critical fail"
+		result += "fatal"
 	} else {
 		result += "fail"
 	}
